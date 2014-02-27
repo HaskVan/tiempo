@@ -1,7 +1,7 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 module Tiempo
   ( TimeInterval
-  -- * TimeInterval to different metrics and types
+  -- * TimeInterval to different units and types
   , toMicroSeconds
   , toMilliSeconds
   , toSeconds
@@ -10,12 +10,14 @@ module Tiempo
   , toDays
   , toNominalDiffTime
 
-
   -- * Time manipulation
   , fromTime
   , fromNow
   , agoTime
   , ago
+
+  -- * Concurrency Utilities
+  , threadDelay
 
   -- * Unit functions
   , microSeconds
@@ -117,6 +119,7 @@ ago interval = agoTime interval `fmap` getCurrentTime
 -- @TimeInterval@ instead of an Int
 threadDelay :: TimeInterval -> IO ()
 threadDelay = Concurrent.threadDelay . toMicroSeconds
+{-# INLINE threadDelay #-}
 
 --------------------------------------------------------------------------------
 
