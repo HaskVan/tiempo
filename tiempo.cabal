@@ -17,7 +17,8 @@ cabal-version:       >=1.10
 
 library
   exposed-modules:
-        Tiempo
+        Tiempo,
+        Tiempo.Concurrent
   -- other-modules:
   -- other-extensions:
   build-depends:

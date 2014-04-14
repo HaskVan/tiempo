@@ -16,9 +16,6 @@ module Tiempo
   , agoTime
   , ago
 
-  -- * Concurrency Utilities
-  , threadDelay
-
   -- * Unit functions
   , microSeconds
   , milliSeconds
@@ -27,11 +24,9 @@ module Tiempo
   , hours
   , days ) where
 
-import qualified Control.Concurrent as Concurrent (threadDelay)
-import           Control.DeepSeq    (NFData (..))
-import           Data.Time          (NominalDiffTime, UTCTime, addUTCTime,
-                                     getCurrentTime)
-import           Data.Typeable      (Typeable)
+import Control.DeepSeq (NFData (..))
+import Data.Time       (NominalDiffTime, UTCTime, addUTCTime, getCurrentTime)
+import Data.Typeable   (Typeable)
 
 --------------------------------------------------------------------------------
 
@@ -112,14 +107,6 @@ agoTime interval = addUTCTime (realToFrac (-1 * toSeconds interval))
 ago :: TimeInterval -> IO UTCTime
 ago interval = agoTime interval `fmap` getCurrentTime
 {-# INLINE ago #-}
-
---------------------------------------------------------------------------------
-
--- | Like @Control.Concurrent.threadDelay@ but accepts a
--- @TimeInterval@ instead of an Int
-threadDelay :: TimeInterval -> IO ()
-threadDelay = Concurrent.threadDelay . toMicroSeconds
-{-# INLINE threadDelay #-}
 
 --------------------------------------------------------------------------------
 
