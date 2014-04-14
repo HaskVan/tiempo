@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveGeneric      #-}
 module Tiempo
   ( TimeInterval
   -- * TimeInterval to different units and types
@@ -27,18 +28,19 @@ module Tiempo
 import Control.DeepSeq (NFData (..))
 import Data.Time       (NominalDiffTime, UTCTime, addUTCTime, getCurrentTime)
 import Data.Typeable   (Typeable)
+import GHC.Generics    (Generic)
 
 --------------------------------------------------------------------------------
 
 data  TimeUnit
   = Days | Hours | Minutes | Seconds | Millis | Micros
-  deriving (Eq, Show, Typeable)
+  deriving (Eq, Show, Typeable, Generic)
 
 instance NFData TimeUnit
 
 data TimeInterval
   = TimeInterval !TimeUnit !Int
-  deriving (Eq, Show)
+  deriving (Eq, Show, Typeable, Generic)
 
 instance NFData TimeInterval where
   rnf (TimeInterval unit n) =
